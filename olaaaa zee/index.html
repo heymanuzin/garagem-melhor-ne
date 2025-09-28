@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garagem Virtual Inteligente</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-garage-car"></i>
+            Garagem Virtual
+        </div>
+        <div class="auth-buttons">
+            <button class="btn btn-secondary" id="themeToggle">
+                <i class="fas fa-moon"></i> Modo Escuro
+            </button>
+            <button class="btn btn-secondary" id="adminModeBtn">
+                <i class="fas fa-user-shield"></i> Modo Admin
+            </button>
+            <button class="btn btn-outline" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+            <button class="btn btn-primary" id="registerBtn">
+                <i class="fas fa-user-plus"></i> Criar Conta
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard">
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-door-open"></i> Portão da Garagem
+                </h2>
+                <div class="garage-door-container">
+                    <div class="garage-door" id="garageDoor">
+                        <div class="door-window"></div>
+                        <div class="door-handle"></div>
+                    </div>
+                    <div id="garageInterior" class="garage-interior"></div>
+                </div>
+                <div class="door-controls">
+                    <button class="btn btn-primary" id="openDoorBtn">
+                        <i class="fas fa-door-open"></i> Abrir Portão
+                    </button>
+                    <button class="btn btn-secondary" id="closeDoorBtn">
+                        <i class="fas fa-door-closed"></i> Fechar Portão
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-shield-alt"></i> Sistema de Alarme
+                </h2>
+                <div class="alarm-section">
+                    <div class="alarm-status" id="alarmStatus">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Alarme Desativado</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="alarmToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <small>Ative/Desative o alarme da sua garagem</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-cloud-sun"></i> Previsão do Tempo
+                </h2>
+                <div class="weather-section">
+                    <div class="weather-search">
+                        <input type="text" id="cityInput" placeholder="Digite o nome da cidade">
+                        <button class="btn btn-primary" id="searchWeatherBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="weather-display" id="weatherDisplay">
+                        <i class="fas fa-cloud weather-icon"></i>
+                        <div class="weather-temp">25°C</div>
+                        <div class="weather-desc">Nublado</div>
+                        <div class="weather-city">São Paulo, BR</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-calendar-day"></i> Data de Hoje
+                </h2>
+                <div id="currentDate" style="font-size: 1.5rem; text-align: center; margin: 1rem 0;"></div>
+                <p style="text-align: center; color: var(--muted);">
+                    Verifique datas de revisão dos veículos abaixo
+                </p>
+            </div>
+        </div>
+
+        <div class="vehicle-section card">
+            <h2 class="card-title">
+                <i class="fas fa-car"></i> Cadastro de Veículos
+            </h2>
+            <form class="vehicle-form" id="vehicleForm">
+                <div class="form-group">
+                    <label for="vehicleModel">Modelo do Veículo</label>
+                    <input type="text" id="vehicleModel" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehiclePlate">Placa</label>
+                    <input type="text" id="vehiclePlate" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleYear">Ano</label>
+                    <input type="number" id="vehicleYear" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleColor">Cor</label>
+                    <input type="text" id="vehicleColor" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastService">Última Revisão</label>
+                    <input type="date" id="lastService" required>
+                </div>
+                <div class="form-group">
+                    <label for="nextService">Próxima Revisão</label>
+                    <input type="date" id="nextService" required>
+                </div>
+            </form>
+            <button type="submit" form="vehicleForm" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Adicionar Veículo
+            </button>
+
+            <h3 style="margin: 2rem 0 1rem 0;">Meus Veículos</h3>
+            <div class="vehicle-list" id="vehicleList">
+                <!-- Vehicle cards will be added here dynamically -->
+            </div>
+        </div>
+
+        <div class="admin-section card" id="adminSection">
+            <h2 class="card-title">
+                <i class="fas fa-users-cog"></i> Área do Administrador
+            </h2>
+            <div class="admin-controls">
+                <button class="btn btn-primary" id="viewClientsBtn">
+                    <i class="fas fa-eye"></i> Visualizar Clientes
+                </button>
+                <button class="btn btn-secondary" id="exportDataBtn">
+                    <i class="fas fa-file-export"></i> Exportar Dados
+                </button>
+            </div>
+
+            <div class="client-list" id="clientList">
+                <!-- Client cards will be added here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Entrar na Conta</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Senha</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeLoginModal">Cancelar</button>
+                <button class="btn btn-primary" id="submitLogin">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Criar Nova Conta</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="registerName">Nome Completo</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Senha</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Senha</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeRegisterModal">Cancelar</button>
+                <button class="btn btn-primary" id="submitRegister">Criar Conta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Pagamento de Revisão</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecione a forma de pagamento para agendar a revisão do veículo:</p>
+                
+                <div class="payment-options">
+                    <div class="payment-option" data-method="credit">
+                        <i class="fas fa-credit-card payment-icon"></i>
+                        <div>Cartão de Crédito</div>
+                    </div>
+                    <div class="payment-option" data-method="debit">
+                        <i class="fas fa-credit-card payment-icon"></i>
+                        <div>Cartão de Débito</div>
+                    </div>
+                    <div class="payment-option" data-method="pix">
+                        <i class="fas fa-qrcode payment-icon"></i>
+                        <div>PIX</div>
+                    </div>
+                    <div class="payment-option" data-method="bank">
+                        <i class="fas fa-university payment-icon"></i>
+                        <div>Transferência</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closePaymentModal">Cancelar</button>
+                <button class="btn btn-primary" id="confirmPayment">Confirmar Pagamento</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Garagem Virtual Inteligente © 2023 - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
